@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	private Rigidbody2D myRigidBody;
 
 
+
 	// Use this for initialization
 	void Start () {
 		myRigidBody = GetComponent<Rigidbody2D>();
