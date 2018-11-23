@@ -396,6 +396,7 @@ MonoBehaviour:
   botBorderTileDL: {fileID: 11400000, guid: 0826af2ee74b890468bce47adb50dcc6, type: 2}
   botBorderTileD: {fileID: 11400000, guid: 7d3272143231f8241a8395bd67c57196, type: 2}
   botBorderTileDR: {fileID: 11400000, guid: f580d65a3c3a96046944944e39d9e0da, type: 2}
+  spellEffect: {fileID: 11400000, guid: e0ecf0a334b8bab4485a62e4b6532a31, type: 2}
 --- !u!4 &872623899
 Transform:
   m_ObjectHideFlags: 0
