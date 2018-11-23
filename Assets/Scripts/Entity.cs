@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class Entity {
 	private Coordinates coord;
 
+    public Entity()
+    {
+
+    }
+
 	public Entity (Coordinates coord)
 	{
 		this.coord.setX(coord.getX());

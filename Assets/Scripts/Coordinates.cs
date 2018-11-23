@@ -20,7 +20,7 @@ public class Coordinates{
 	}
 
 	public int getY(){
-		return this.Y;
+		return this.y;
 	}
 
 	public void setY(int value){

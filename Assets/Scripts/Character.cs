@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Character extends Entity {
+public class Character : Entity{
 	//TODO
 	//add implements ICombat and IMovable
 
