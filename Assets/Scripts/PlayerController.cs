@@ -1,60 +1,115 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Reflection;
+using System;
+using UnityEditor;
 
 public class PlayerController : MonoBehaviour {
+    static MethodInfo _clearConsoleMethod;
 
-	public float moveSpeed;
-	private float currentMoveSpeed;
-	public float diagonalMoveModifier;
-    private bool playerMoving;
-    public Vector2 lastMove;
-	private Rigidbody2D myRigidBody;
+	private Model model;
+	private int playerRow, playerCol;
+	public int[,] array;
 
-
-
-	// Use this for initialization
-	void Start () {
-		myRigidBody = GetComponent<Rigidbody2D>();
-
-		lastMove = new Vector2(0f , -1f);
+    void Start () {
+		ClearLogConsole();
+		model = new Model(10, 10);
+		this.array = model.array;
+		FindPlayer(this.array);
+		//model.DisplayArrayDebug();
+		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        playerMoving = false;
-		//gets velocity in order to move and update animations
 
-		if (Input.GetAxisRaw ("Horizontal") > 0.5f || Input.GetAxisRaw ("Horizontal") < -0.5f) {
-		//	transform.Translate (new Vector3(Input.GetAxisRaw ("Horizontal") * moveSpeed * Time.deltaTime, 0f, 0f));
-			myRigidBody.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * currentMoveSpeed, myRigidBody.velocity.y);
-			playerMoving = true;
-			lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+		if (Input.GetKeyDown(KeyCode.W))
+		{
+			MovePlayer("up");
 		}
-
-		if(Input.GetAxisRaw("Vertical") > 0.5f || Input.GetAxisRaw("Vertical") < -0.5f) {
-		//    transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime, 0f));
-
-			myRigidBody.velocity = new Vector2 (myRigidBody.velocity.x, Input.GetAxisRaw ("Vertical") * currentMoveSpeed);
-			playerMoving = true;
-			lastMove = new Vector2(0f, Input.GetAxisRaw("Vertical"));
+		if(Input.GetKeyDown(KeyCode.S))
+		{
+			MovePlayer("down");
 		}
-
-		if (Input.GetAxisRaw ("Horizontal") < 0.5 && Input.GetAxisRaw ("Horizontal") > -0.5) {
-			myRigidBody.velocity = new Vector2 (0f, myRigidBody.velocity.y);
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			MovePlayer("left");
 		}
-
-		if (Input.GetAxisRaw ("Vertical") < 0.5f && Input.GetAxisRaw ("Vertical") > -0.5f) {
-			myRigidBody.velocity = new Vector2 (myRigidBody.velocity.x, 0f);
-		
-		}
-
-		if (Mathf.Abs (Input.GetAxisRaw ("Horizontal")) > 0.5f && Mathf.Abs (Input.GetAxisRaw ("Vertical")) > 0.5f) {
-			currentMoveSpeed = moveSpeed * diagonalMoveModifier;
-		} else {
-			currentMoveSpeed = moveSpeed;
-		}
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			MovePlayer("right");
+		}	
 
 	}
 
+	private void MovePlayer(string direction)
+	{
+		for(int i = 0; i < array.GetLength(1); i++)
+		{
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+				if(array[i,j] == model.player)
+				{
+					if(direction == "right" && i > 0)
+					{
+						array[playerRow, playerCol] = 0;
+						array[playerRow -1, playerCol] = model.player;
+					}
+					if(direction == "left" && i < array.GetLength(1)-1)
+					{
+						array[playerRow, playerCol] = 0;
+						// Debug.Log(playerRow);
+						array[playerRow +1, playerCol] = model.player;
+					}
+					if(direction == "up" && j > 0)
+					{
+						array[playerRow, playerCol] = 0;
+						array[playerRow, playerCol -1] = model.player;
+					}
+					if(direction == "down" && j < array.GetLength(1)-1)
+					{
+						array[playerRow, playerCol] = 0;
+						array[playerRow, playerCol + 1] = model.player;
+					}
+				}
+            }
+		}
+        
+		ClearLogConsole();
+		FindPlayer(this.array);
+		//model.DisplayArrayDebug();
+		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
+		
+	}
+
+	private void FindPlayer(int[,] array)
+	{
+		for(int i = 0; i < array.GetLength(1); i++)
+		{
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+				if(array[i,j] == 1)
+				{
+					playerRow = i;
+					playerCol = j;
+				}
+            }
+		}
+	}
+
+
+     static MethodInfo clearConsoleMethod {
+         get {
+             if (_clearConsoleMethod == null) {
+                 Assembly assembly = Assembly.GetAssembly (typeof(SceneView));
+                 Type logEntries = assembly.GetType ("UnityEditor.LogEntries");
+                 _clearConsoleMethod = logEntries.GetMethod ("Clear");
+             }
+             return _clearConsoleMethod;
+         }
+     }
+ 
+     public static void ClearLogConsole() {
+         clearConsoleMethod.Invoke (new object (), null);
+     }
 }

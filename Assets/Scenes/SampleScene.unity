@@ -310,7 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294e5239e5020914a80c32f6ba90de20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
 --- !u!1 &360723239
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 872623899}
+  - component: {fileID: 872623900}
   - component: {fileID: 872623898}
   m_Layer: 0
   m_Name: Map
@@ -380,6 +380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e3ea03fcd9e3242b90c08f843cf032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousLvl: 0
+  currentLvl: 1
+  player: {fileID: 872623900}
   topMap: {fileID: 140752582}
   botMap: {fileID: 959598566}
   topTile: {fileID: 11400000, guid: 86e7c38a28897eb41b549ccaae88d7fd, type: 2}
@@ -400,12 +403,23 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 872623897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &872623900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872623897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeff2d81972181541a2b423251e51420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &959598563
 GameObject:
   m_ObjectHideFlags: 0
