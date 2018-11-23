@@ -50,23 +50,23 @@ public class PlayerController : MonoBehaviour {
             {
 				if(array[i,j] == model.player)
 				{
-					if(direction == "up")
+					if(direction == "up" && i > 0)
 					{
 						array[playerRow, playerCol] = 0;
 						array[playerRow -1, playerCol] = model.player;
 					}
-					if(direction == "down")
+					if(direction == "down" && i < array.GetLength(1)-1)
 					{
 						array[playerRow, playerCol] = 0;
 						// Debug.Log(playerRow);
 						array[playerRow +1, playerCol] = model.player;
 					}
-					if(direction == "left")
+					if(direction == "left" && j > 0)
 					{
 						array[playerRow, playerCol] = 0;
 						array[playerRow, playerCol -1] = model.player;
 					}
-					if(direction == "right")
+					if(direction == "right" && j < array.GetLength(1)-1)
 					{
 						array[playerRow, playerCol] = 0;
 						array[playerRow, playerCol + 1] = model.player;
