@@ -6,6 +6,11 @@ using UnityEditor;
 
 public class View : MonoBehaviour
 {
+    
+    public int previousLvl = 0;
+    public int currentLvl = 1 ;
+
+    public PlayerController player;
 
     private int[,] map;
     private int width;
@@ -30,28 +35,26 @@ public class View : MonoBehaviour
 
     private void Start()
     {
-        width = Random.Range(5, 20);
-        height = Random.Range(5, 20);
-        map = new int[width, height];
-
-        setBackground();
 
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (previousLvl != currentLvl)
+        {
+            previousLvl = currentLvl;
             setBackground();
-        if (Input.GetMouseButtonDown(1))
+        }
+            
+        //if (Input.GetMouseButtonDown(1))
             move();        
     }
 
     private void setBackground()
     {
-        /////test
-        width = Random.Range(5, 20);
-        height = Random.Range(5, 20);
-        map = new int[width, height];
-        /////
+        map = player.array;
+        width = map.GetLength(1);
+        height = map.GetLength(0);
+        Debug.Log(width);
         botMap.ClearAllTiles();
         topMap.ClearAllTiles();
         for (int x = 0; x < width; x++)
@@ -89,22 +92,13 @@ public class View : MonoBehaviour
                 }
             }
         }
-
     }
+
+    
 
     private void move()
     {
         topMap.ClearAllTiles();
-
-        //////test
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-                map[x, y] = 0;
-
-        int px = Random.Range(0, width);
-        int py = Random.Range(0, height);
-        map[px, py] = 1;
-        //////
 
         for (int x = 0; x < width; x++)
         {
