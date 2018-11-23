@@ -27,7 +27,7 @@ public class Model {
 		}
 
 		//player spawn in 5,5
-		array[5,5] = 1;
+		array[6,4] = 1;
 	}
 
 	public void DisplayArrayDebug()
@@ -43,7 +43,6 @@ public class Model {
 			}
 			Debug.Log(s+"\n");
 		}
-		
 	}
 	
 }
