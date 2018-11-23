@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour {
 	public float moveSpeed;
 	private static bool cameraExists;
 
+    Model model;
+    View view;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -21,10 +24,11 @@ public class CameraController : MonoBehaviour {
 		}
 
 		//create array map
-		Model model = new Model(10,10);
+		model = new Model(10,10);
 		//display in console
-		model.DisplayArrayDebug();
-	}
+		//model.DisplayArrayDebug();
+        
+    }
 
 
 
@@ -32,13 +36,12 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        /*
 		//follows any target tagged player and has a smooth follow 
 		followTarget = GameObject.FindGameObjectWithTag ("Player");
 		targetPos = new Vector3(followTarget.transform.position.x, followTarget.transform.position.y, transform.position.z);
 		transform.position = Vector3.Lerp (transform.position, targetPos, moveSpeed * Time.deltaTime); 
-
-
-
+        */
 	}
 
 
