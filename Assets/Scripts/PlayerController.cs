@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         
 		ClearLogConsole();
 		FindPlayer(this.array);
-		//model.DisplayArrayDebug();
+		model.DisplayArrayDebug();
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 		
 	}
