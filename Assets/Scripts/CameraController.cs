@@ -23,7 +23,6 @@ public class CameraController : MonoBehaviour {
 		//create array map
 		Model model = new Model(10,10);
 		//display in console
-		model.DisplayArrayDebug();
 	}
 
 

@@ -6,9 +6,11 @@ public class Model {
 
 	public int[,] array;
 	public int x, y;
+	public int player;
 
 	public Model(int x, int y)
 	{
+		this.player = 1;
 		this.x = x;
 		this.y = y;
 		CreateMap(x,y);
@@ -27,13 +29,12 @@ public class Model {
 		}
 
 		//player spawn in 5,5
-		array[5,5] = 1;
+		array[5,5] = player;
 	}
 
 	public void DisplayArrayDebug()
 	{
-		
-
+	
 		for(int i = 0; i < x; i++) 
 		{
 			string s = "";
