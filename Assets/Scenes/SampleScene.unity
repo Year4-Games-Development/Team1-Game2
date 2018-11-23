@@ -177,7 +177,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topMap: {fileID: 140752582}
   botMap: {fileID: 959598566}
-  topTile: {fileID: 11400000, guid: 9fbe82bed5fb0df4e821abd91a1d6198, type: 2}
+  topTile: {fileID: 11400000, guid: 86e7c38a28897eb41b549ccaae88d7fd, type: 2}
   botTile0: {fileID: 11400000, guid: 18b386e7d795b3e488fd6b1735691b24, type: 2}
   botTile1: {fileID: 11400000, guid: 11fd352eedc01c74a9077826ebc4ef1b, type: 2}
   botBorderTileUL: {fileID: 11400000, guid: c849ce78372eb7d4dbd9ed348e585ff9, type: 2}
