@@ -38,9 +38,15 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.D))
 		{
 			MovePlayer("right");
-		}	
+		}
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Spell spell = new Spell("boom", 10, 10, "right", 3);
+            spell.showSpell(array);
+        }
 
-	}
+
+    }
 
 	private void MovePlayer(string direction)
 	{

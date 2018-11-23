@@ -58,7 +58,7 @@ public class Spell : MonoBehaviour {
             }
         }
 
-        else if (range.getDirection() == "rigth") {
+        else if (range.getDirection() == "right") {
             for(int total = y; total < y + quantity; total++) {
                 map[x, total + 1] = 8;
             }
