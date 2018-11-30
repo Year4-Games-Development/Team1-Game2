@@ -12,11 +12,12 @@ public class PlayerController : MonoBehaviour {
 	public int[,] array;
 
     void Start () {
-		ClearLogConsole();
+		// ClearLogConsole();
 		model = new Model(10, 10);
 		this.array = model.array;
 		FindPlayer(this.array);
-		//model.DisplayArrayDebug();
+		// model.DisplayArrayDebug();
+		
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
 	}
@@ -110,6 +111,6 @@ public class PlayerController : MonoBehaviour {
      }
  
      public static void ClearLogConsole() {
-         clearConsoleMethod.Invoke (new object (), null);
+        clearConsoleMethod.Invoke (new object (), null);
      }
 }

@@ -4,47 +4,28 @@ using System.Collections.Generic;
 
 public class Character : Entity {
 
-	private string name;
-    private Coordinates coord = new Coordinates();
 	private bool isPlayable;
 	//private Spell mySpell[];
 	private int manaPoint;
-	private int lifePoint;
 
-	public Character (string name,Coordinates coord, bool isPlayable, int manaPoint, int lifePoint){
-		//TODO
-		//add spell array
-
-		this.name = name;
-		this.coord.setX(coord.getX());
-		this.coord.setY(coord.getY());
+	public Character (string name,Coordinates coord,int id,  bool isPlayable, int manaPoint, int hp): base(coord, name, id, hp){
+        //TODO
+        //add spell array        
 		this.isPlayable = isPlayable;
 		this.manaPoint = manaPoint;
-		this.lifePoint = lifePoint;
 	}
 
-	public Character (string name,int x, int y, bool isPlayable, int manaPoint, int lifePoint){
+    public Character(string name, int x, int y, int id, bool isPlayable, int manaPoint, int hp): base(x,y, name, id, hp)
+    {
 		//TODO
 		//add spell array
-
-		this.name = name;
-		this.coord.setX(x);
-		this.coord.setY(y);
+        
 		this.isPlayable = isPlayable;
 		this.manaPoint = manaPoint;
-		this.lifePoint = lifePoint;
         
 	}
 
-    public int getLifePoint()
-    {
-        return this.lifePoint;
-    }
 
-    public void setLifePoint(int value)
-    {
-        this.lifePoint = value;
-    }
     
     public int getManaPoint()
     {
@@ -62,9 +43,9 @@ public class Character : Entity {
         {
             if (!amIDead())
             {
-                if (this.getLifePoint() - value > 0)
+                if (this.GetHp() - value > 0)
                 {
-                    this.setLifePoint(this.getLifePoint() - value);
+                    this.SetHp(this.GetHp() - value);
                 }else
                 {
                     if (!this.isPlayable)
@@ -94,7 +75,7 @@ public class Character : Entity {
         {
             if (!amIDead())
             {
-                this.setLifePoint(this.getLifePoint() + value);
+                this.SetHp(this.GetHp() + value);
             }
             else
             {
@@ -109,7 +90,7 @@ public class Character : Entity {
 
     public bool amIDead()
     {
-        if(this.getLifePoint() > 0)
+        if(this.GetHp() > 0)
         {
             return false;
         }
