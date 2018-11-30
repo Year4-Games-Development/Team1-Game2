@@ -15,52 +15,69 @@ public class Spell : MonoBehaviour {
         range = new Range(direction, quantity);
     }
 
-    public void showSpell(int [,]map) {
+    public void showSpell(Model model) {
         int playerX = 0;
         int playerY = 0;
 
-        for (int x = 0; x < map.GetLength(0); x++) {
-            for (int y = 0; y < map.GetLength(1); y++) {
-                if (map[x,y] == 1) {
+        for (int x = 0; x < model.array.GetLength(0); x++) {
+            for (int y = 0; y < model.array.GetLength(1); y++) {
+                Coordinates coord = new Coordinates(x, y);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable) {
 
                     playerX = x;
                     playerY = y;
 
-                    if (!checkBounds(x, y, map.GetLength(0), map.GetLength(1))) {
+                    if (!checkBounds(x, y, model.array.GetLength(0), model.array.GetLength(1))) {
                         print("You cannot do this spell, it is out of range");
                         return;
                     }
                 }
             }
         }
-        printSpell(playerX, playerY, map);
+        printSpell(playerX, playerY, model);
     }
 
-    private void printSpell(int x, int y, int [,]map) {
+    private void printSpell(int x, int y, Model model) {
 
         int quantity = range.getQuantity();
 
         if (range.getDirection() == "up") {
             for (int total = x - quantity; total < x; total++) {
-                map[total, y] = 8;
+                Coordinates coord = new Coordinates(total, y);
+                if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                {
+                    model.getSquare(coord).setSpellEffect(this);
+                }
             }
         }
 
         else if (range.getDirection() == "down") {
             for (int total = x; total < x + quantity; total++) {
-                map[total + 1, y] = 8;
+                Coordinates coord = new Coordinates(total + 1, y);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                {
+                    model.getSquare(coord).setSpellEffect(this);
+                }
             }
         }
 
         else if (range.getDirection() == "left") {
             for (int total = y - quantity; total < y; total++) {
-                map[x, total] = 8;
+                Coordinates coord = new Coordinates(x, total);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                {
+                    model.getSquare(coord).setSpellEffect(this);
+                }
             }
         }
 
         else if (range.getDirection() == "right") {
             for(int total = y; total < y + quantity; total++) {
-                map[x, total + 1] = 8;
+                Coordinates coord = new Coordinates(x, total + 1);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                {
+                    model.getSquare(coord).setSpellEffect(this);
+                }
             }
         }       
     }

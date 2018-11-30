@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Obstacle : Entity {
 
-    private bool isDamagable;
-    private bool isInteractable;
+    public bool isDamagable { get; set; }
+    public bool isInteractable { get; set; }
     //only 1 item for the moment
     private Item inventory;
     public Obstacle(Coordinates coord, bool isDamagable, bool isInteractable,  string name, int id, int hp, Item item) : base(coord, name, id, hp)

@@ -9,13 +9,13 @@ public class PlayerController : MonoBehaviour {
 
 	private Model model;
 	private int playerRow, playerCol;
-	public int[,] array;
+	public Square[,] array;
 
     void Start () {
 		// ClearLogConsole();
 		model = new Model(10, 10);
 		this.array = model.array;
-		FindPlayer(this.array);
+		FindPlayer();
 		// model.DisplayArrayDebug();
 		
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.T))
         {
             Spell spell = new Spell("boom", 10, 10, "right", 3);
-            spell.showSpell(array);
+            spell.showSpell(model);
         }
 
 
@@ -55,47 +55,48 @@ public class PlayerController : MonoBehaviour {
 		{
             for (int j = 0; j < array.GetLength(0); j++)
             {
-				if(array[i,j] == model.player)
+                Coordinates coord = new Coordinates(i, j);
+				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
 				{
 					if(direction == "right" && i > 0)
-					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow -1, playerCol] = model.player;
-					}
+                    {
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow - 1, playerCol)).setCharacter(model.player);
+                    }
 					if(direction == "left" && i < array.GetLength(1)-1)
-					{
-						array[playerRow, playerCol] = 0;
-						// Debug.Log(playerRow);
-						array[playerRow +1, playerCol] = model.player;
-					}
+                    {
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow + 1, playerCol)).setCharacter(model.player);
+                    }
 					if(direction == "up" && j > 0)
 					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow, playerCol -1] = model.player;
-					}
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow, playerCol - 1)).setCharacter(model.player);
+                    }
 					if(direction == "down" && j < array.GetLength(1)-1)
 					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow, playerCol + 1] = model.player;
-					}
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow, playerCol + 1)).setCharacter(model.player);
+                    }
 				}
             }
 		}
         
 		ClearLogConsole();
-		FindPlayer(this.array);
+		FindPlayer();
 		model.DisplayArrayDebug();
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 		
 	}
 
-	private void FindPlayer(int[,] array)
+	private void FindPlayer()
 	{
 		for(int i = 0; i < array.GetLength(1); i++)
 		{
             for (int j = 0; j < array.GetLength(0); j++)
             {
-				if(array[i,j] == 1)
+                Coordinates coord = new Coordinates(i, j);
+				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
 				{
 					playerRow = i;
 					playerCol = j;

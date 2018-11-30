@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour {
 		//display in console
 		
         Spell spell = new Spell("spell 1", 100, 20, "down", 2);
-        spell.showSpell(model.array);
+        spell.showSpell(model);
         model.DisplayArrayDebug();
     }
 

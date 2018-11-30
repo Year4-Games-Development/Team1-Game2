@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Character : Entity {
 
-	private bool isPlayable;
+	public bool isPlayable { get; set; }
 	//private Spell mySpell[];
 	private int manaPoint;
 
@@ -130,5 +130,7 @@ public class Character : Entity {
             //illegal position
         }
     }
+
+
 
 }
