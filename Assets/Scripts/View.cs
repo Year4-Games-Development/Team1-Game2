@@ -32,6 +32,8 @@ public class View : MonoBehaviour
     public Tile botBorderTileD;
     public Tile botBorderTileDR;
 
+    public Tile spellEffect;
+
 
     private void Start()
     {
@@ -106,6 +108,8 @@ public class View : MonoBehaviour
             {
                 if (map[x, y] == 1)
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
+                if (map[x, y] == 8)
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), spellEffect);
             }
         }
     }
