@@ -19,7 +19,8 @@ public class View : MonoBehaviour
     public Tilemap topMap;
     public Tilemap botMap;
 
-    public Tile topTile;
+    public Tile PlayerSprite;
+    public Tile enemySprite;
 
     public Tile botTile0;
     public Tile botTile1;
@@ -107,7 +108,9 @@ public class View : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 if (map[x, y].isOccupied() && map[x, y].isCharacter() && map[x, y].getCharacter().isPlayable)
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), PlayerSprite);
+                if (map[x, y].isOccupied() && map[x, y].isCharacter() && !map[x, y].getCharacter().isPlayable)
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), enemySprite);
                 if (map[x, y].haveSpellEffect())
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), spellEffect);
             }
