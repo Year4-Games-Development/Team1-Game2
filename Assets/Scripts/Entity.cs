@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class Entity {
-	protected Coordinates coord;
+	protected Coordinates coord = new Coordinates();
     protected string name;
     protected int id;
     protected int hp; 

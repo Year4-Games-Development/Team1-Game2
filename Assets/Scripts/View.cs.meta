@@ -3,7 +3,22 @@ guid: 50e3ea03fcd9e3242b90c08f843cf032
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player: {instanceID: 0}
+  - topMap: {instanceID: 0}
+  - botMap: {instanceID: 0}
+  - topTile: {instanceID: 0}
+  - botTile0: {instanceID: 0}
+  - botTile1: {instanceID: 0}
+  - botBorderTileUL: {instanceID: 0}
+  - botBorderTileU: {instanceID: 0}
+  - botBorderTileUR: {instanceID: 0}
+  - botBorderTileL: {instanceID: 0}
+  - botBorderTileR: {instanceID: 0}
+  - botBorderTileDL: {instanceID: 0}
+  - botBorderTileD: {instanceID: 0}
+  - botBorderTileDR: {instanceID: 0}
+  - spellEffect: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

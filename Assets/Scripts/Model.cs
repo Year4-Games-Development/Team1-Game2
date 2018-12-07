@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Model {
+public class Model
+{
 
-	public Square[,] array;
-	public int x, y;
-	public Character player; //modify player in entity
+    public Square[,] array;
+    public int x, y;
+    public Character player; //modify player in entity
 
 
     //TODO
     // Modify array int in array Square 
     // Add function for create monster
 
-	public Model(int x, int y)
-	{
-		this.player = new Character ("Player",new Coordinates(5,5),1,true,20,20);
+    public Model(int x, int y)
+    {
+        CreateMap(x, y);
+        this.player = new Character("Player", new Coordinates(5, 5), 1, true, 20, 20);
         setOccupationByCharacter(new Coordinates(5, 5), this.player);
         this.x = x;
-		this.y = y;
-		CreateMap(x,y);
+        this.y = y;
         initializeBoard();
-	}
+
+    }
 
     private void initializeBoard()
     {
         int difficultyLvl = 2;
-        int nbrMonster = Random.Range(1*difficultyLvl, 3*difficultyLvl);
+        int nbrMonster = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
         int nbrObstacle = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
 
         for (int i = 0; i < nbrMonster; i++)
@@ -38,7 +40,7 @@ public class Model {
             }
             while (getSquare(monsterCoord).isOccupied());
 
-            Character monster = new Character("Mob" + i, monsterCoord,10+i, false, 10, 10);
+            Character monster = new Character("Mob" + i, monsterCoord, 10 + i, false, 10, 10);
             setOccupationByCharacter(monsterCoord, monster);
         }
 
@@ -58,26 +60,26 @@ public class Model {
     }
 
     private void CreateMap(int x, int y)
-	{
-		array = new Square[x, y];
+    {
+        array = new Square[x,y];
 
-		for(int i = 0; i < x; i++) 
-		{
-			for(int j = 0; j < y; j++)
-			{
-				array[i,j] = new Square();
-			}
-		}
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                array[i, j] = new Square();
+            }
+        }
 
-		//player spawn in 5,5
-		//array[5,5] = player;
+        //player spawn in 5,5
+        //array[5,5] = player;
 
-	}
+    }
 
-    private void setOccupationByCharacter (Coordinates coord, Character entity)
+    private void setOccupationByCharacter(Coordinates coord, Character entity)
     {
         //check if coord is no "illegal"
-        if(entity == null)
+        if (entity == null)
         {
             getSquare(coord).setCharacter(null);
         }
@@ -102,21 +104,21 @@ public class Model {
 
     public Square getSquare(Coordinates coord)
     {
-        return array[coord.getX(),coord.getY()];
+        return array[coord.getX(), coord.getY()];
     }
 
-	public void DisplayArrayDebug()
-	{
-	
-		for(int i = 0; i < x; i++) 
-		{
-			string s = "";
-			for(int j = 0; j < y; j++)
-			{
-				s += "[" + array[i,j] + "]";
-			}
-			Debug.Log(s+"\n");
-		}
-	}
-	
+    public void DisplayArrayDebug()
+    {
+
+        for (int i = 0; i < x; i++)
+        {
+            string s = "";
+            for (int j = 0; j < y; j++)
+            {
+                s += "[" + array[i, j] + "]";
+            }
+            Debug.Log(s + "\n");
+        }
+    }
+
 }

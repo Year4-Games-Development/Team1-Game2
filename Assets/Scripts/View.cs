@@ -12,7 +12,7 @@ public class View : MonoBehaviour
 
     public PlayerController player;
 
-    private int[,] map;
+    private Square[,] map;
     private int width;
     private int height;
 
@@ -37,7 +37,7 @@ public class View : MonoBehaviour
 
     private void Start()
     {
-
+        map = player.array;
     }
     void Update()
     {
@@ -48,7 +48,7 @@ public class View : MonoBehaviour
         }
             
         //if (Input.GetMouseButtonDown(1))
-            move();        
+            move();
     }
 
     private void setBackground()
@@ -106,9 +106,9 @@ public class View : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (map[x, y] == 1)
+                if (map[x, y].isOccupied() && map[x, y].isCharacter() && map[x, y].getCharacter().isPlayable)
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
-                if (map[x, y] == 8)
+                if (map[x, y].haveSpellEffect())
                     topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), spellEffect);
             }
         }

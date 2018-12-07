@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log("CameraController");
 	//stops duplication of camera 
 		if (!cameraExists) {
 			cameraExists = true;
