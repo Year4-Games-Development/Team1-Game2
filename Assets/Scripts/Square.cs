@@ -35,6 +35,14 @@ public class Square  {
             return true;
     }
 
+    public bool haveSpellEffect()
+    {
+        if (this.spellEffect == null)
+            return false;
+        else
+            return true;
+    }
+
     public Character getCharacter()
     {
         return this.character;
