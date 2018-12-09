@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spell : MonoBehaviour {
+public class Spell {
     private string name;
     private int amountOfDamage;
     private int mana;
     private Range range;
 
-    public Spell(string name, int dmg, int mana, string direction, int quantity) {
+    public Spell(string name, int dmg, int mana, Directions.direction direction, int quantity) {
         this.name = name;
         amountOfDamage = dmg;
         this.mana = mana;
@@ -41,7 +41,7 @@ public class Spell : MonoBehaviour {
 
         int quantity = range.getQuantity();
 
-        if (range.getDirection() == "up") {
+        if (range.getDirection() == Directions.direction.Up) {
             for (int total = x - quantity; total < x; total++) {
                 Coordinates coord = new Coordinates(total, y);
                 if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
@@ -51,7 +51,7 @@ public class Spell : MonoBehaviour {
             }
         }
 
-        else if (range.getDirection() == "down") {
+        else if (range.getDirection() == Directions.direction.Down) {
             for (int total = x; total < x + quantity; total++) {
                 Coordinates coord = new Coordinates(total + 1, y);
                 if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
@@ -61,7 +61,7 @@ public class Spell : MonoBehaviour {
             }
         }
 
-        else if (range.getDirection() == "left") {
+        else if (range.getDirection() == Directions.direction.Left) {
             for (int total = y - quantity; total < y; total++) {
                 Coordinates coord = new Coordinates(x, total);
                 if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
@@ -71,7 +71,7 @@ public class Spell : MonoBehaviour {
             }
         }
 
-        else if (range.getDirection() == "right") {
+        else if (range.getDirection() == Directions.direction.Right) {
             for(int total = y; total < y + quantity; total++) {
                 Coordinates coord = new Coordinates(x, total + 1);
                 if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
@@ -90,12 +90,12 @@ public class Spell : MonoBehaviour {
     private bool checkBounds(int x, int y, int maxX, int maxY) {
 
         int quantity = range.getQuantity();
-        string direction = range.getDirection();
+        Directions.direction direction = range.getDirection();
 
-        if (direction == "up" && (x - quantity < 0) ||
-            direction == "down" && (x + quantity >= maxX) ||
-            direction == "left" && (y - quantity < 0) ||
-            direction == "rigth" && (y + quantity >= maxY)) {
+        if (direction == Directions.direction.Up && (x - quantity < 0) ||
+            direction == Directions.direction.Down && (x + quantity >= maxX) ||
+            direction == Directions.direction.Left && (y - quantity < 0) ||
+            direction == Directions.direction.Right && (y + quantity >= maxY)) {
 
             return false;
         }

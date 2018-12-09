@@ -5,20 +5,21 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - player: {instanceID: 0}
-  - topMap: {instanceID: 0}
-  - botMap: {instanceID: 0}
-  - topTile: {instanceID: 0}
-  - botTile0: {instanceID: 0}
-  - botTile1: {instanceID: 0}
-  - botBorderTileUL: {instanceID: 0}
-  - botBorderTileU: {instanceID: 0}
-  - botBorderTileUR: {instanceID: 0}
-  - botBorderTileL: {instanceID: 0}
-  - botBorderTileR: {instanceID: 0}
-  - botBorderTileDL: {instanceID: 0}
-  - botBorderTileD: {instanceID: 0}
-  - botBorderTileDR: {instanceID: 0}
-  - spellEffect: {instanceID: 0}
+  - entityLayout: {instanceID: 0}
+  - groundLayout: {instanceID: 0}
+  - playerSprite: {instanceID: 0}
+  - enemySprite: {instanceID: 0}
+  - spellEfectTile: {instanceID: 0}
+  - groundTile: {instanceID: 0}
+  - groundTileVariation: {instanceID: 0}
+  - upLeftBorderTile: {instanceID: 0}
+  - upBorderTile: {instanceID: 0}
+  - upRightBorderLayout: {instanceID: 0}
+  - leftBorderTile: {instanceID: 0}
+  - rightBorderTile: {instanceID: 0}
+  - downLeftBorderTile: {instanceID: 0}
+  - downBorderTile: {instanceID: 0}
+  - downRightBorderTile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

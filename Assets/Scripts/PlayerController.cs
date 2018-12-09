@@ -24,32 +24,32 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
 
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			MovePlayer("up");
+			MovePlayer(Directions.direction.Up);
 		}
-		if(Input.GetKeyDown(KeyCode.S))
+		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 		{
-			MovePlayer("down");
+			MovePlayer(Directions.direction.Down);
 		}
-		if(Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			MovePlayer("left");
+			MovePlayer(Directions.direction.Left);
 		}
-		if(Input.GetKeyDown(KeyCode.D))
+		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			MovePlayer("right");
+			MovePlayer(Directions.direction.Right);
 		}
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Spell spell = new Spell("boom", 10, 10, "right", 3);
+            Spell spell = new Spell("boom", 10, 10, Directions.direction.Right, 3);
             spell.showSpell(model);
         }
 
 
     }
 
-	private void MovePlayer(string direction)
+	private void MovePlayer(Directions.direction direction)
 	{
 		for(int i = 0; i < array.GetLength(1); i++)
 		{
@@ -58,22 +58,22 @@ public class PlayerController : MonoBehaviour {
                 Coordinates coord = new Coordinates(i, j);
 				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
 				{
-					if(direction == "right" && i > 0)
+					if(direction == Directions.direction.Right && i > 0)
                     {
                         model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
                         model.getSquare(new Coordinates(playerRow - 1, playerCol)).setCharacter(model.player);
                     }
-					if(direction == "left" && i < array.GetLength(1)-1)
+					if(direction == Directions.direction.Left && i < array.GetLength(1)-1)
                     {
                         model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
                         model.getSquare(new Coordinates(playerRow + 1, playerCol)).setCharacter(model.player);
                     }
-					if(direction == "up" && j > 0)
+					if(direction == Directions.direction.Up && j > 0)
 					{
                         model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
                         model.getSquare(new Coordinates(playerRow, playerCol - 1)).setCharacter(model.player);
                     }
-					if(direction == "down" && j < array.GetLength(1)-1)
+					if(direction == Directions.direction.Down && j < array.GetLength(1)-1)
 					{
                         model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
                         model.getSquare(new Coordinates(playerRow, playerCol + 1)).setCharacter(model.player);

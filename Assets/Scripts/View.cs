@@ -6,34 +6,39 @@ using UnityEditor;
 
 public class View : MonoBehaviour
 {
-    
+    //detect if we changed the map
     public int previousLvl = 0;
     public int currentLvl = 1 ;
 
+    //use to get the map
     public PlayerController player;
 
+    //current map
     private Square[,] map;
     private int width;
     private int height;
 
-    public Tilemap topMap;
-    public Tilemap botMap;
+    //2 layouts of tile, the first is use for entities and the second for the background
+    public Tilemap entityLayout;
+    public Tilemap groundLayout;
 
-    public Tile PlayerSprite;
+    //entities sprites
+    public Tile playerSprite;
     public Tile enemySprite;
+    public Tile spellEfectTile;
 
-    public Tile botTile0;
-    public Tile botTile1;
-    public Tile botBorderTileUL;
-    public Tile botBorderTileU;
-    public Tile botBorderTileUR;
-    public Tile botBorderTileL;
-    public Tile botBorderTileR;
-    public Tile botBorderTileDL;
-    public Tile botBorderTileD;
-    public Tile botBorderTileDR;
-
-    public Tile spellEffect;
+    //ground sprites
+    public Tile groundTile;
+    public Tile groundTileVariation;
+    public Tile upLeftBorderTile;
+    public Tile upBorderTile;
+    public Tile upRightBorderTile;
+    public Tile leftBorderTile;
+    public Tile rightBorderTile;
+    public Tile downLeftBorderTile;
+    public Tile downBorderTile;
+    public Tile downRightBorderTile;
+    
 
 
     private void Start()
@@ -42,78 +47,92 @@ public class View : MonoBehaviour
     }
     void Update()
     {
+        //if we change the map
         if (previousLvl != currentLvl)
         {
             previousLvl = currentLvl;
             setBackground();
         }
-            
-        //if (Input.GetMouseButtonDown(1))
             move();
     }
 
     private void setBackground()
     {
         map = player.array;
+        //update current map size
         width = map.GetLength(1);
         height = map.GetLength(0);
-        Debug.Log(width);
-        botMap.ClearAllTiles();
-        topMap.ClearAllTiles();
+
+        //clean the map
+        groundLayout.ClearAllTiles();
+        entityLayout.ClearAllTiles();
+
+        //set ground tiles
         for (int x = 0; x < width; x++)
-        {
             for (int y = 0; y < height; y++)
             {
-                if (x == 0 && y == 0)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileUR);
-                else if (x == 0 && y == height-1)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileDR);
-                else if (x == 0)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileR);
-                else if (x == width-1 && y == 0)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileUL);
-                else if (x == width-1 && y == height-1)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileDL);
-                else if (x == width-1)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileL);
-                else if (y == 0)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileU);
-                else if (y == height-1)
-                    botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botBorderTileD);
-                else
+                Vector3Int coordinates = TileCoordinates(x, y);
+
+                if (x == 0 && y == 0)//Up Right Border
+                    groundLayout.SetTile(coordinates, upRightBorderTile);
+                else if (x == 0 && y == height-1)//Down Right Border
+                    groundLayout.SetTile(coordinates, downRightBorderTile);
+                else if (x == 0)//Right Border
+                    groundLayout.SetTile(coordinates, rightBorderTile);
+                else if (x == width-1 && y == 0)//Up Left Border
+                    groundLayout.SetTile(coordinates, upLeftBorderTile);
+                else if (x == width-1 && y == height-1)//Down Left Border
+                    groundLayout.SetTile(coordinates, downLeftBorderTile);
+                else if (x == width-1)//Left Border
+                    groundLayout.SetTile(coordinates, leftBorderTile);
+                else if (y == 0)//Up Border
+                    groundLayout.SetTile(coordinates, upBorderTile);
+                else if (y == height-1)// Down Border
+                    groundLayout.SetTile(coordinates, downBorderTile);
+                else//normal ground (not a border)
                 {
-                    int rand = Random.Range(0, 10);
+                    int rand = Random.Range(0, 10);//1/10 chance to be a variate ground
                     switch (rand)
                     {
-                        case 1:
-                            botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile1);
+                        case 1://variation
+                            groundLayout.SetTile(coordinates, groundTileVariation);
                             break;
                         default:
-                            botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile0);
+                            groundLayout.SetTile(coordinates, groundTile);
                             break;
                     }
                 }
             }
-        }
     }
 
     
 
     private void move()
     {
-        topMap.ClearAllTiles();
+        //reset positions
+        entityLayout.ClearAllTiles();
 
+        //set entites tiles
         for (int x = 0; x < width; x++)
-        {
             for (int y = 0; y < height; y++)
             {
+                Vector3Int coordinates = TileCoordinates(x, y);
+                //player tile
                 if (map[x, y].isOccupied() && map[x, y].isCharacter() && map[x, y].getCharacter().isPlayable)
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), PlayerSprite);
+                    entityLayout.SetTile(coordinates, playerSprite);
+                //monster tile
                 if (map[x, y].isOccupied() && map[x, y].isCharacter() && !map[x, y].getCharacter().isPlayable)
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), enemySprite);
+                    entityLayout.SetTile(coordinates, enemySprite);
+                //spell effect tile
                 if (map[x, y].haveSpellEffect())
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), spellEffect);
+                    entityLayout.SetTile(coordinates, spellEfectTile);
             }
-        }
     }
+
+    //create the vector for tile set
+    private Vector3Int TileCoordinates(int x, int y)
+    {
+        return new Vector3Int(-x + width/2, -y + height/2, 0);
+    }
+
 }

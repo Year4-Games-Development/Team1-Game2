@@ -383,21 +383,23 @@ MonoBehaviour:
   previousLvl: 0
   currentLvl: 1
   player: {fileID: 872623900}
-  topMap: {fileID: 140752582}
-  botMap: {fileID: 959598566}
-  PlayerSprite: {fileID: 11400000, guid: 47aab837563525f418411aa03959e488, type: 2}
+  entityLayout: {fileID: 140752582}
+  groundLayout: {fileID: 959598566}
+  playerSprite: {fileID: 11400000, guid: 47aab837563525f418411aa03959e488, type: 2}
   enemySprite: {fileID: 11400000, guid: 6119abd3695e47a48a120ad0b86fbdb6, type: 2}
-  botTile0: {fileID: 11400000, guid: d53e1d1c5f838c24099003dfcf90a49e, type: 2}
-  botTile1: {fileID: 11400000, guid: d1f6d2c75ff96d8458efc5351418d6b0, type: 2}
-  botBorderTileUL: {fileID: 11400000, guid: 49bcb99d546acac4194d93923fa418bb, type: 2}
-  botBorderTileU: {fileID: 11400000, guid: f964620bca961e8489e479c93d418eb5, type: 2}
-  botBorderTileUR: {fileID: 11400000, guid: d8c620c160c0a354982d8cc80ffc2619, type: 2}
-  botBorderTileL: {fileID: 11400000, guid: fea913979d591944da3fffc98974a595, type: 2}
-  botBorderTileR: {fileID: 11400000, guid: aff741679d294804f962778f177abcd6, type: 2}
-  botBorderTileDL: {fileID: 11400000, guid: abd02f21f78f26a4c809efa13c320ebe, type: 2}
-  botBorderTileD: {fileID: 11400000, guid: 5a3c47bc481de5240afec28a301e06f1, type: 2}
-  botBorderTileDR: {fileID: 11400000, guid: 75cba53aba23dcb40aa876cb496b4035, type: 2}
-  spellEffect: {fileID: 11400000, guid: d73f05d4d7bb8b64391663ba3babd510, type: 2}
+  spellEfectTile: {fileID: 11400000, guid: d73f05d4d7bb8b64391663ba3babd510, type: 2}
+  groundTile: {fileID: 11400000, guid: d53e1d1c5f838c24099003dfcf90a49e, type: 2}
+  groundTileVariation: {fileID: 11400000, guid: d1f6d2c75ff96d8458efc5351418d6b0,
+    type: 2}
+  upLeftBorderTile: {fileID: 11400000, guid: 49bcb99d546acac4194d93923fa418bb, type: 2}
+  upBorderTile: {fileID: 11400000, guid: f964620bca961e8489e479c93d418eb5, type: 2}
+  upRightBorderTile: {fileID: 11400000, guid: d8c620c160c0a354982d8cc80ffc2619, type: 2}
+  leftBorderTile: {fileID: 11400000, guid: fea913979d591944da3fffc98974a595, type: 2}
+  rightBorderTile: {fileID: 11400000, guid: aff741679d294804f962778f177abcd6, type: 2}
+  downLeftBorderTile: {fileID: 11400000, guid: abd02f21f78f26a4c809efa13c320ebe, type: 2}
+  downBorderTile: {fileID: 11400000, guid: 5a3c47bc481de5240afec28a301e06f1, type: 2}
+  downRightBorderTile: {fileID: 11400000, guid: 75cba53aba23dcb40aa876cb496b4035,
+    type: 2}
 --- !u!4 &872623899
 Transform:
   m_ObjectHideFlags: 0
