@@ -5,20 +5,27 @@ using UnityEngine;
 public class Range : MonoBehaviour {
 
     // Direction can be: up, down, left, right
-    private Directions.direction direction;
+    private Orientation direction;
 
-    private int quantity;
+    private int quantityX;
+    private int quantityY;
 
-    public Range(Directions.direction direction, int quantity) {
+    public Range(Orientation direction, int quantityX, int quantityY) {
         this.direction = direction;
-        this.quantity = quantity;
+        this.quantityX = quantityX;
+        this.quantityY = quantityY;
     }
 
-    public Directions.direction getDirection() {
+    public Orientation getDirection() {
         return direction;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getQuantityX() {
+        return quantityX;
+    }
+
+    public int getQuantityY()
+    {
+        return quantityY;
     }
 }

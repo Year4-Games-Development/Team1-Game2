@@ -6,6 +6,7 @@ public class Model
 {
 
     public Square[,] array;
+    public Spell[] spellArray;
     public int x, y;
     public Character player; //modify player in entity
 
@@ -22,7 +23,6 @@ public class Model
         this.x = x;
         this.y = y;
         initializeBoard();
-
     }
 
     private void initializeBoard()

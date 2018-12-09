@@ -2,17 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Orientation
+{
+    Up,
+    Down,
+    Right,
+    Left
+}
+
+
 public class Character : Entity {
 
-	public bool isPlayable { get; set; }
+    public bool isPlayable { get; set; }
 	//private Spell mySpell[];
 	private int manaPoint;
+    public Orientation TheOrientation { get; set; }
 
 	public Character (string name,Coordinates coord,int id,  bool isPlayable, int manaPoint, int hp): base(coord, name, id, hp){
         //TODO
         //add spell array        
 		this.isPlayable = isPlayable;
 		this.manaPoint = manaPoint;
+        this.TheOrientation = Orientation.Up;
 	}
 
     public Character(string name, int x, int y, int id, bool isPlayable, int manaPoint, int hp): base(x,y, name, id, hp)

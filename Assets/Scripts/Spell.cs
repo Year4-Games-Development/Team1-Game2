@@ -8,11 +8,11 @@ public class Spell {
     private int mana;
     private Range range;
 
-    public Spell(string name, int dmg, int mana, Directions.direction direction, int quantity) {
+    public Spell(string name, int dmg, int mana, Orientation direction, int quantityX, int quantityY) {
         this.name = name;
         amountOfDamage = dmg;
         this.mana = mana;
-        range = new Range(direction, quantity);
+        range = new Range(direction, quantityX, quantityY);
     }
 
     public void showSpell(Model model) {
@@ -39,44 +39,103 @@ public class Spell {
 
     private void printSpell(int x, int y, Model model) {
 
-        int quantity = range.getQuantity();
+        int quantityX = range.getQuantityX();
+        int quantityY = range.getQuantityY();
 
-        if (range.getDirection() == Directions.direction.Up) {
-            for (int total = x - quantity; total < x; total++) {
-                Coordinates coord = new Coordinates(total, y);
-                if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+if (range.getDirection() == Orientation.Up) {
+            for (int total = x - quantityX; total < x; total++) {
+                if(quantityY != 0)
                 {
-                    model.getSquare(coord).setSpellEffect(this);
+                    for (int i = -((quantityY-1)/2); i < ((quantityY - 1)/ 2)+1 ; i++)
+                    {
+                        Coordinates coord = new Coordinates(total, y+i);
+                        if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                        {
+                            model.getSquare(coord).setSpellEffect(this);
+                        }
+                    }
+                }
+                else
+                {
+                    Coordinates coord = new Coordinates(total, y);
+                    if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                    {
+                        model.getSquare(coord).setSpellEffect(this);
+                    }
                 }
             }
         }
 
-        else if (range.getDirection() == Directions.direction.Down) {
-            for (int total = x; total < x + quantity; total++) {
-                Coordinates coord = new Coordinates(total + 1, y);
-                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+ else if (range.getDirection() == Orientation.Down) {
+            for (int total = x; total < x + quantityX; total++) {
+                if (quantityY != 0)
                 {
-                    model.getSquare(coord).setSpellEffect(this);
+                    for (int i = -((quantityY - 1) / 2); i < ((quantityY - 1) / 2) + 1; i++)
+                    {
+                        Coordinates coord = new Coordinates(total + 1, y+i);
+                        if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                        {
+                            model.getSquare(coord).setSpellEffect(this);
+                        }
+                    }
                 }
+                else
+                {
+                    Coordinates coord = new Coordinates(total + 1, y);
+                    if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                    {
+                        model.getSquare(coord).setSpellEffect(this);
+                    }
+                }
+                
             }
         }
 
-        else if (range.getDirection() == Directions.direction.Left) {
-            for (int total = y - quantity; total < y; total++) {
-                Coordinates coord = new Coordinates(x, total);
-                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+else if (range.getDirection() == Orientation.Left) {
+            for (int total = y - quantityX; total < y; total++)
+            {
+                if (quantityY != 0)
                 {
-                    model.getSquare(coord).setSpellEffect(this);
+                    for (int i = -((quantityY - 1) / 2); i < ((quantityY - 1) / 2) + 1; i++)
+                    {
+                        Coordinates coord = new Coordinates(x+i, total);
+                        if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                        {
+                            model.getSquare(coord).setSpellEffect(this);
+                        }
+                    }
+                }
+                else
+                {
+                    Coordinates coord = new Coordinates(x, total);
+                    if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                    {
+                        model.getSquare(coord).setSpellEffect(this);
+                    }
                 }
             }
         }
-
-        else if (range.getDirection() == Directions.direction.Right) {
-            for(int total = y; total < y + quantity; total++) {
-                Coordinates coord = new Coordinates(x, total + 1);
-                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+        else if (range.getDirection() == Orientation.Right) {
+            for(int total = y; total < y + quantityX; total++)
+            {
+                if (quantityY != 0)
                 {
-                    model.getSquare(coord).setSpellEffect(this);
+                    for (int i = -((quantityY - 1) / 2); i < ((quantityY - 1) / 2) + 1; i++)
+                    {
+                        Coordinates coord = new Coordinates(x + i, total + 1);
+                        if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                        {
+                            model.getSquare(coord).setSpellEffect(this);
+                        }
+                    }
+                }
+                else
+                {
+                    Coordinates coord = new Coordinates(x, total + 1);
+                    if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isObstacle() && model.getSquare(coord).getObstacle().isDamagable)
+                    {
+                        model.getSquare(coord).setSpellEffect(this);
+                    }
                 }
             }
         }       
@@ -88,14 +147,14 @@ public class Spell {
      * 
      */
     private bool checkBounds(int x, int y, int maxX, int maxY) {
+int quantityX = range.getQuantityX();
+        int quantityY = range.getQuantityY();
+        Orientation direction = range.getDirection();
 
-        int quantity = range.getQuantity();
-        Directions.direction direction = range.getDirection();
-
-        if (direction == Directions.direction.Up && (x - quantity < 0) ||
-            direction == Directions.direction.Down && (x + quantity >= maxX) ||
-            direction == Directions.direction.Left && (y - quantity < 0) ||
-            direction == Directions.direction.Right && (y + quantity >= maxY)) {
+        if (direction == Orientation.Up && (x - quantityX < 0) && ((y + (quantityY+1/2) < 0) || (y + (quantityY + 1 / 2) >= maxY)) ||
+            direction == Orientation.Down && (x + quantityX >= maxX) && ((y + (quantityY + 1 / 2) < 0) || (y + (quantityY + 1 / 2) >= maxY)) ||
+            direction == Orientation.Left && (y - quantityX < 0) && ((x + (quantityY + 1 / 2) < 0) || (y + (quantityY + 1 / 2) >= maxX)) ||
+            direction == Orientation.Right && (y + quantityX >= maxY) && ((x + (quantityY + 1 / 2) < 0) || (y + (quantityY + 1 / 2) >= maxX))) {
 
             return false;
         }

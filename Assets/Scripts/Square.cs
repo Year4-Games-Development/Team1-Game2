@@ -11,6 +11,7 @@ public class Square  {
     public Square()
     {
         this.character = null;
+        this.spellEffect = null;
     }
         
     public bool isOccupied()
