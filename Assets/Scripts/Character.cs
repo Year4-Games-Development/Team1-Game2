@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum Orientation
 {
@@ -13,9 +14,25 @@ public enum Orientation
 
 public class Character : Entity {
 
-    public bool isPlayable { get; set; }
-	//private Spell mySpell[];
-	private int manaPoint;
+    public bool isPlayable { get; private set; }
+    //private Spell mySpell[];
+    private int manaPoint;
+	public int ManaPoint
+    {
+        get
+        {
+            return manaPoint;
+        }
+        set
+        {
+            manaPoint = value;
+            if (manaPoint > maxMana)
+                manaPoint = maxMana;
+            else if (manaPoint < 0)
+                manaPoint = 0;
+        }
+    }
+    private int maxMana;
     public Orientation TheOrientation { get; set; }
 
 	public Character (string name,Coordinates coord,int id,  bool isPlayable, int manaPoint, int hp): base(coord, name, id, hp){
@@ -36,85 +53,6 @@ public class Character : Entity {
         
 	}
 
-
-    
-    public int getManaPoint()
-    {
-        return this.manaPoint;
-    }
-
-    public void setManaPoint(int value)
-    {
-        this.manaPoint = value;
-    }
-
-    public void receiveDamage(int value)
-    {
-        if (value > 0)
-        {
-            if (!amIDead())
-            {
-                if (this.GetHp() - value > 0)
-                {
-                    this.SetHp(this.GetHp() - value);
-                }else
-                {
-                    if (!this.isPlayable)
-                    {
-                        //monster die
-                    }
-                    else
-                    {
-                        //player die
-                    }
-                }
-            }
-            else
-            {
-                // I'm dead
-            }
-        }
-        else
-        {
-            //value < 0 
-        }
-    }
-
-    public void receiveHealth(int value)
-    {
-        if (value > 0)
-        {
-            if (!amIDead())
-            {
-                this.SetHp(this.GetHp() + value);
-            }
-            else
-            {
-                // I'm dead
-            }
-        }
-        else
-        {
-            //value < 0 
-        }
-    }
-
-    public bool amIDead()
-    {
-        if(this.GetHp() > 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    public string getFeature()
-    {
-        return "";
-    }
 
     public void move(int x, int y)
     {
@@ -141,7 +79,6 @@ public class Character : Entity {
             //illegal position
         }
     }
-
 
 
 }

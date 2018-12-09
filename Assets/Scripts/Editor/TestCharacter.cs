@@ -15,7 +15,7 @@ class TestCharacter
         player.receiveDamage(damageReceive);
 
         // Assert
-        Assert.AreEqual(resultExpected, player.GetHp());
+        Assert.AreEqual(resultExpected, player.Hp);
     }
 
     [Test]
@@ -30,7 +30,7 @@ class TestCharacter
         player.receiveDamage(damageReceive);
 
         // Assert
-        Assert.AreEqual(resultExpected, player.GetHp());
+        Assert.AreEqual(resultExpected, player.Hp);
     }
 
     [Test]
@@ -42,10 +42,10 @@ class TestCharacter
         int resultExpected = 100;
 
         // Act
-        player.receiveHealth(heqlthReceiveHealth);
+        player.receiveDamage(-heqlthReceiveHealth);
 
         // Assert
-        Assert.AreEqual(resultExpected, player.GetHp());
+        Assert.AreEqual(resultExpected, player.Hp);
     }
 
     [Test]
@@ -57,9 +57,9 @@ class TestCharacter
         int resultExpected = 80;
 
         // Act
-        player.receiveHealth(healthReceive);
+        player.receiveDamage(-healthReceive);
 
         // Assert
-        Assert.AreEqual(resultExpected, player.GetHp());
+        Assert.AreEqual(resultExpected, player.Hp);
     }
 }

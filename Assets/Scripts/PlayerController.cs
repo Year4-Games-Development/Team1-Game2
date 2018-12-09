@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour {
 		model = new Model(10, 10);
         this.array = model.array;
 		FindPlayer();
-        model.DisplayArrayDebug();
-		
-		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
+
+        //model.DisplayArrayDebug();		
+		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
 	}
 	
@@ -98,8 +98,8 @@ public class PlayerController : MonoBehaviour {
         
 		ClearLogConsole();
 		FindPlayer();
-		model.DisplayArrayDebug();
-		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
+		//model.DisplayArrayDebug();
+		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 		
 	}
 

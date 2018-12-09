@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour {
 		
         Spell spell = new Spell("spell 1", 100, 20, Orientation.Down, 2, 0);
         spell.showSpell(model);
-        model.DisplayArrayDebug();
+        //model.DisplayArrayDebug();
     }
 
 
