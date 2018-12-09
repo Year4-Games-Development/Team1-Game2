@@ -28,7 +28,7 @@ public class Spell {
                     playerY = y;
 
                     if (!checkBounds(x, y, model.array.GetLength(0), model.array.GetLength(1))) {
-                        print("You cannot do this spell, it is out of range");
+                        Debug.Log("You cannot do this spell, it is out of range");
                         return;
                     }
                 }
