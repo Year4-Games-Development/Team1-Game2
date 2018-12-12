@@ -350,7 +350,48 @@ Transform:
   - {fileID: 140752580}
   - {fileID: 959598564}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &795179121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 795179123}
+  - component: {fileID: 795179122}
+  m_Layer: 0
+  m_Name: EnemyAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &795179122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795179121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0515b741e820644283672263f65b786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 872623900}
+--- !u!4 &795179123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795179121}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &872623897
 GameObject:
@@ -385,7 +426,8 @@ MonoBehaviour:
   player: {fileID: 872623900}
   topMap: {fileID: 140752582}
   botMap: {fileID: 959598566}
-  topTile: {fileID: 11400000, guid: 86e7c38a28897eb41b549ccaae88d7fd, type: 2}
+  PlayerSprite: {fileID: 11400000, guid: 86e7c38a28897eb41b549ccaae88d7fd, type: 2}
+  enemySprite: {fileID: 11400000, guid: 99ae36c9332c7ab41a639e6c83a7a911, type: 2}
   botTile0: {fileID: 11400000, guid: 18b386e7d795b3e488fd6b1735691b24, type: 2}
   botTile1: {fileID: 11400000, guid: 11fd352eedc01c74a9077826ebc4ef1b, type: 2}
   botBorderTileUL: {fileID: 11400000, guid: c849ce78372eb7d4dbd9ed348e585ff9, type: 2}
@@ -408,7 +450,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &872623900
 MonoBehaviour:
@@ -421,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeff2d81972181541a2b423251e51420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 795179122}
 --- !u!1 &959598563
 GameObject:
   m_ObjectHideFlags: 0

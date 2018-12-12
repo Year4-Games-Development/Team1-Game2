@@ -7,9 +7,12 @@ using UnityEditor;
 public class PlayerController : MonoBehaviour {
     static MethodInfo _clearConsoleMethod;
 
-	private Model model;
+	public Model model;
 	private int playerRow, playerCol;
 	public Square[,] array;
+    public EnemyController enemy;
+
+    
 
     void Start () {
 		// ClearLogConsole();
@@ -17,7 +20,6 @@ public class PlayerController : MonoBehaviour {
         this.array = model.array;
 		FindPlayer();
         model.DisplayArrayDebug();
-		
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
 	}
@@ -81,8 +83,9 @@ public class PlayerController : MonoBehaviour {
 				}
             }
 		}
-        
-		ClearLogConsole();
+
+        EmmitMoveEvent();
+        ClearLogConsole();
 		FindPlayer();
 		model.DisplayArrayDebug();
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
@@ -120,4 +123,11 @@ public class PlayerController : MonoBehaviour {
      public static void ClearLogConsole() {
         clearConsoleMethod.Invoke (new object (), null);
      }
+
+
+    public void EmmitMoveEvent()
+    { 
+            //move enemy in random direction for now
+            enemy.MoveMonters(UnityEngine.Random.Range(0,4));
+    }
 }

@@ -57,7 +57,7 @@ public class View : MonoBehaviour
         map = player.array;
         width = map.GetLength(1);
         height = map.GetLength(0);
-        Debug.Log(width);
+        //Debug.Log(width);
         botMap.ClearAllTiles();
         topMap.ClearAllTiles();
         for (int x = 0; x < width; x++)
