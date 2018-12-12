@@ -6,11 +6,11 @@ using UnityEditor;
 
 public class PlayerController : MonoBehaviour {
     static MethodInfo _clearConsoleMethod;
+    public EnemyController enemy;
 
-	public Model model;
+    public Model model;
 	private int playerRow, playerCol;
 	public Square[,] array;
-    public EnemyController enemy;
 
     
 
@@ -84,13 +84,14 @@ public class PlayerController : MonoBehaviour {
             }
 		}
 
-        EmmitMoveEvent();
+
         ClearLogConsole();
 		FindPlayer();
 		model.DisplayArrayDebug();
 		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
-		
-	}
+        EmmitMoveEvent();
+
+    }
 
 	private void FindPlayer()
 	{
@@ -126,8 +127,9 @@ public class PlayerController : MonoBehaviour {
 
 
     public void EmmitMoveEvent()
-    { 
-            //move enemy in random direction for now
-            enemy.MoveMonters(UnityEngine.Random.Range(0,4));
+    {
+
+         //move enemy in random direction for now
+         enemy.MoveMonters(UnityEngine.Random.Range(0,4), array);
     }
 }

@@ -15,12 +15,11 @@ public class EnemyController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+   
+        //this.array = player.array;
         Debug.Log("onche onche");
         monsters = new List<Character>();
         Debug.Log("model.array length" + model.array.GetLength(1));
-        this.array = model.array;
-        
         FindAllMonsters();
 
     }
@@ -31,8 +30,9 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public void MoveMonters(int d)
+    public void MoveMonters(int d, Square[,] array)
     {
+        this.array = array;
         switch (d)
         {
             case 0:
@@ -57,27 +57,27 @@ public class EnemyController : MonoBehaviour
             for (int j = 0; j < array.GetLength(0); j++)
             {
                 Coordinates coord = new Coordinates(i, j);
-                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                if (player.model.getSquare(coord).isOccupied() && player.model.getSquare(coord).isCharacter() && !player.model.getSquare(coord).getCharacter().isPlayable)
                 {
                     if (direction == "right" && i > 0)
                     {
-                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
-                        model.getSquare(new Coordinates(monsterRow - 1, monsterCol)).setCharacter(model.monster);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        player.model.getSquare(new Coordinates(monsterRow - 1, monsterCol)).setCharacter(player.model.monster);
                     }
                     if (direction == "left" && i < array.GetLength(1) - 1)
                     {
-                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
-                        model.getSquare(new Coordinates(monsterRow + 1, monsterCol)).setCharacter(model.monster);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        player.model.getSquare(new Coordinates(monsterRow + 1, monsterCol)).setCharacter(player.model.monster);
                     }
                     if (direction == "up" && j > 0)
                     {
-                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
-                        model.getSquare(new Coordinates(monsterRow, monsterCol - 1)).setCharacter(model.monster);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol - 1)).setCharacter(player.model.monster);
                     }
                     if (direction == "down" && j < array.GetLength(1) - 1)
                     {
-                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
-                        model.getSquare(new Coordinates(monsterRow, monsterCol + 1)).setCharacter(model.monster);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        player.model.getSquare(new Coordinates(monsterRow, monsterCol + 1)).setCharacter(player.model.monster);
                     }
                 }
             }
@@ -95,6 +95,8 @@ public class EnemyController : MonoBehaviour
                 {
                     monsters.Add(array[i, j].getCharacter());
                     Debug.Log("monster found");
+                    monsterRow = i;
+                    monsterCol = j;
                 }
             }
         }
