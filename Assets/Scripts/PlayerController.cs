@@ -27,25 +27,22 @@ public class PlayerController : MonoBehaviour {
 		{
             MovePlayer(Orientation.Up);
             model.player.TheOrientation = Orientation.Up;
-            MoveMonster(Orientation.Up);
 
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 		{
 			MovePlayer(Orientation.Down);
-            MoveMonster(Orientation.Down);
 
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			MovePlayer(Orientation.Left);
-            MoveMonster(Orientation.Left);
+            
 
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			MovePlayer(Orientation.Right);
-            MoveMonster(Orientation.Right);
 
         }
         if (Input.GetKeyDown(KeyCode.T))
@@ -68,6 +65,12 @@ public class PlayerController : MonoBehaviour {
             Spell spell = new Spell("Tortuous Breath", 5, 7, array[playerRow, playerCol].getCharacter().TheOrientation, 1,0);
             spell.showSpell(model);
         }
+
+        if (Input.anyKeyDown)
+        {
+            MoveMonster(UnityEngine.Random.Range(0, 4));
+        }
+
     }
 
 	private void MovePlayer(Orientation direction)
@@ -110,8 +113,28 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 
-    private void MoveMonster(Orientation direction)
+    private void MoveMonster(int d)
     {
+        Orientation direction = Orientation.Down;
+
+        switch (d)
+        {
+            case 0:
+                direction = Orientation.Up;
+                break;
+            case 1:
+                direction = Orientation.Left;
+                break;
+            case 2:
+                direction = Orientation.Down;
+                break;
+            case 3:
+                direction = Orientation.Right;
+                break;
+            default:
+                direction = Orientation.Up;
+                break;
+        }
         for (int i = 0; i < array.GetLength(1); i++)
         {
             for (int j = 0; j < array.GetLength(0); j++)
