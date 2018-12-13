@@ -8,15 +8,14 @@ public class PlayerController : MonoBehaviour {
     static MethodInfo _clearConsoleMethod;
 
 	private Model model;
-	private int playerRow, playerCol;
+	private int playerRow, playerCol, monsterRow, monsterCol;
 	public Square[,] array;
-
     void Start () {
 		// ClearLogConsole();
 		model = new Model(10, 10);
         this.array = model.array;
 		FindPlayer();
-
+        FindMonster();
         //model.DisplayArrayDebug();		
 		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
@@ -26,21 +25,29 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			MovePlayer(Orientation.Up);
+            MovePlayer(Orientation.Up);
             model.player.TheOrientation = Orientation.Up;
-		}
-		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            MoveMonster(Orientation.Up);
+
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 		{
 			MovePlayer(Orientation.Down);
-		}
-		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            MoveMonster(Orientation.Down);
+
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			MovePlayer(Orientation.Left);
-		}
-		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            MoveMonster(Orientation.Left);
+
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			MovePlayer(Orientation.Right);
-		}
+            MoveMonster(Orientation.Right);
+
+        }
         if (Input.GetKeyDown(KeyCode.T))
         {
             Spell spell = new Spell("Kamehaneha", 15, 20, array[playerRow,playerCol].getCharacter().TheOrientation, 7,0);
@@ -103,7 +110,47 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 
-	private void FindPlayer()
+    private void MoveMonster(Orientation direction)
+    {
+        for (int i = 0; i < array.GetLength(1); i++)
+        {
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+                Coordinates coord = new Coordinates(i, j);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                {
+                    if (direction == Orientation.Right && i > 0)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow - 1, monsterCol)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Left && i < array.GetLength(1) - 1)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow + 1, monsterCol)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Up && j > 0)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow, monsterCol - 1)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Down && j < array.GetLength(1) - 1)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow, monsterCol + 1)).setCharacter(model.monster);
+                    }
+                }
+            }
+        }
+
+        ClearLogConsole();
+        FindMonster();
+
+
+    }
+
+
+    private void FindPlayer()
 	{
 		for(int i = 0; i < array.GetLength(1); i++)
 		{
@@ -119,8 +166,24 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+    private void FindMonster()
+    {
+        for (int i = 0; i < array.GetLength(1); i++)
+        {
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+                Coordinates coord = new Coordinates(i, j);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                {
+                    monsterRow = i;
+                    monsterCol = j;
+                }
+            }
+        }
+    }
 
-     static MethodInfo clearConsoleMethod {
+
+    static MethodInfo clearConsoleMethod {
          get {
              if (_clearConsoleMethod == null) {
                  Assembly assembly = Assembly.GetAssembly (typeof(SceneView));

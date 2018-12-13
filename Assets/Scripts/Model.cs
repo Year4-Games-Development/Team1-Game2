@@ -9,6 +9,7 @@ public class Model
     public Spell[] spellArray;
     public int x, y;
     public Character player; //modify player in entity
+    public Character monster; //modify monster in entity
 
 
     //TODO
@@ -28,7 +29,8 @@ public class Model
     private void initializeBoard()
     {
         int difficultyLvl = 2;
-        int nbrMonster = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
+        //int nbrMonster = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
+        int nbrMonster = 1;
         int nbrObstacle = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
 
         for (int i = 0; i < nbrMonster; i++)
@@ -40,7 +42,7 @@ public class Model
             }
             while (getSquare(monsterCoord).isOccupied());
 
-            Character monster = new Character("Mob" + i, monsterCoord, 10 + i, false, 10, 10);
+            monster = new Character("Mob" + i, monsterCoord, 10 + i, false, 10, 10);
             setOccupationByCharacter(monsterCoord, monster);
         }
 
