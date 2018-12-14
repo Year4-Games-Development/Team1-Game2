@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
 
     public void Update() {
         playerControllerNonMono.MyUpdate();
-
     }
 
 }

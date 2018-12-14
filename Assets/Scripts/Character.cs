@@ -32,7 +32,7 @@ public class Character : Entity {
                 manaPoint = 0;
         }
     }
-    private int maxMana;
+    private int maxMana = 10;
     public Orientation TheOrientation { get; set; }
 
 	public Character (string name,Coordinates coord,int id,  bool isPlayable, int manaPoint, int hp): base(coord, name, id, hp){

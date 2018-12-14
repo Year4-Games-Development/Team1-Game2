@@ -19,8 +19,6 @@ public class Model
     public Model(int x, int y)
     {
         CreateMap(x, y);
-        this.player = new Character("Player", new Coordinates(5, 5), 1, true, 20, 20);
-        setOccupationByCharacter(new Coordinates(5, 5), this.player);
         this.x = x;
         this.y = y;
         initializeBoard();
@@ -29,15 +27,15 @@ public class Model
 
     private void initializeBoard()
     {
-//        CreateObstacles(1);
-//        CreateMonsters(1);
+        //        CreateObstacles(1);
+        CreateMonsters(1);
     }
 
 
     private void CreateObstacles(int numObstacles)
     {
-        int difficultyLvl = 2;
-        int nbrObstacle = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
+        //int difficultyLvl = 2;
+        //int nbrObstacle = Random.Range(1 * difficultyLvl, 3 * difficultyLvl);
 
         /*for (int i = 0; i < nbrObstacle; i++)
         {
@@ -70,6 +68,12 @@ public class Model
         }
     }
 
+    public void CreatePlayer()
+    {
+        this.player = new Character("Player", new Coordinates(5, 5), 1, true, 20, 20);
+        setOccupationByCharacter(new Coordinates(5, 5), this.player);
+    }
+
     private void CreateMap(int x, int y)
     {
         array = new Square[x,y];
@@ -82,8 +86,6 @@ public class Model
             }
         }
 
-        //player spawn in 5,5
-        //array[5,5] = player;
 
     }
 
@@ -102,7 +104,6 @@ public class Model
 
     private void setOccupationByObstacle(Coordinates coord, Obstacle entity)
     {
-        //check if coord is no "illegal"
         if (entity == null)
         {
             getSquare(coord).setObstacle(null);
@@ -150,26 +151,27 @@ public class Model
 
     }
 
-    private bool PlayerInIndex(int row, int col)
+    public bool PlayerInIndex(int row, int col)
     {
         if (array[row, col].isCharacter() && array[row, col].getCharacter().isPlayable)
             return true;
         return false;
     }
 
-    private bool NothingInIndex(int row, int col)
+    public bool NothingInIndex(int row, int col)
     {
         if (!array[row, col].isCharacter() || !array[row, col].getCharacter().isPlayable)
             return true;
         return false;
     }
 
-    private bool MonsterInIndex(int row, int col)
+    public bool MonsterInIndex(int row, int col)
     {
         if (array[row, col].isCharacter() && !array[row, col].getCharacter().isPlayable)
             return true;
         return false;
     }
+
 
     private CharRepresentation GetCharRepresentation(int row, int col)
     {

@@ -3,13 +3,12 @@ using System.Collections;
 using System.Reflection;
 using System;
 using UnityEditor;
-
 public class PlayerControllerNonMono {
     static MethodInfo _clearConsoleMethod;
 
 	private Model model;
     public int playerRow, playerCol;
-    private int[] monsterRow, monsterCol;
+    private int monsterRow, monsterCol;
     
 	public Square[,] array;
     public void MyStart () {
@@ -18,6 +17,7 @@ public class PlayerControllerNonMono {
         this.array = model.array;
 		FindPlayer();
         FindMonster();
+        model.CreatePlayer();
         //model.DisplayArrayDebug();		
 		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
@@ -73,12 +73,12 @@ public class PlayerControllerNonMono {
 
         if (!TryToMovePlayer(coord, direction))
         {
-           // Debug.Log("tried to move player");
             // beep to user since not able to move
         }
-	     
-		ClearLogConsole();
-		FindPlayer();
+
+        ClearLogConsole();
+        FindPlayer();
+        model.DisplayArrayDebug();
     
     }
 
@@ -133,6 +133,11 @@ public class PlayerControllerNonMono {
 
             return true;
         }
+        //if its occupied by a monster, player takes damage
+        else if(model.MonsterInIndex(destinationLocation.getX(), destinationLocation.getY()))
+        {
+            model.player.receiveDamage(5);
+        }
 
         return false;
     }
@@ -145,7 +150,7 @@ public class PlayerControllerNonMono {
             for (int j = 0; j < array.GetLength(0); j++)
             {
                 Coordinates coord = new Coordinates(i, j);
-				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
+                if (model.PlayerInIndex(i, j))
 				{
 					playerRow = i;
 					playerCol = j;
@@ -156,40 +161,77 @@ public class PlayerControllerNonMono {
 
     private void FindMonster()
     {
-        monsterRow = new int[10];
-        monsterCol = new int[10];
-
-        int count = 0; 
         for (int i = 0; i < array.GetLength(1); i++)
         {
             for (int j = 0; j < array.GetLength(0); j++)
             {
                 Coordinates coord = new Coordinates(i, j);
-                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                if (model.MonsterInIndex(i, j))
                 {
-                    monsterRow[count] = i;
-                    monsterCol[count] = j;
-                    count++;
-
-                    Debug.Log("MonsterRow " + monsterRow.ToString());
+                    monsterRow = i;
+                    playerCol = j;
                 }
             }
         }
     }
 
 
+
     static MethodInfo clearConsoleMethod {
-         get {
-             if (_clearConsoleMethod == null) {
-                 Assembly assembly = Assembly.GetAssembly (typeof(SceneView));
-                 Type logEntries = assembly.GetType ("UnityEditor.LogEntries");
-                 _clearConsoleMethod = logEntries.GetMethod ("Clear");
-             }
-             return _clearConsoleMethod;
-         }
-     }
+        get {
+            if (_clearConsoleMethod == null) {
+                Assembly assembly = Assembly.GetAssembly (typeof(SceneView));
+                Type logEntries = assembly.GetType ("UnityEditor.LogEntries");
+                _clearConsoleMethod = logEntries.GetMethod ("Clear");
+            }
+            return _clearConsoleMethod;
+        }
+    }
  
-     public static void ClearLogConsole() {
+    public static void ClearLogConsole() {
         clearConsoleMethod.Invoke (new object (), null);
-     }
+    }
+
+
+    private void SetPlayerRow(int row)
+    {
+        this.playerRow = row;
+    }
+
+    private int GetPlayerRow()
+    {
+        return this.playerRow;
+    }
+
+    private void SetMonsterrRow(int row)
+    {
+        this.monsterRow = row;
+    }
+
+    private int GetMonsterRow()
+    {
+        return this.monsterRow;
+    }
+
+    private void SetPlayerCol(int col)
+    {
+        this.playerRow = col;
+    }
+
+    private int GetPlayerCol()
+    {
+        return this.playerCol;
+    }
+
+    private void SetMonsterrCol(int col)
+    {
+        this.monsterRow = col;
+    }
+
+    private int GetMonsterCol()
+    {
+        return this.monsterCol;
+    }
+
+
 }

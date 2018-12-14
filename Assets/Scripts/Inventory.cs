@@ -6,13 +6,13 @@ using UnityEngine;
 public class Inventory
 {
 
-    private int size;
+    //private int size;
 
     public List<Item> items;
 
     public Inventory(int size)
     {
-        this.size = size;
+        //this.size = size;
         items = new List<Item>();
     }
 
