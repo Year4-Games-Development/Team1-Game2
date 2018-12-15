@@ -32,6 +32,7 @@ class TestPlayerControllerNonMono
         // Act
         playerControllerNonMono.MyStart();
         playerControllerNonMono.MovePlayer(Orientation.Up);
+        playerControllerNonMono.MovePlayer(Orientation.Up);
         int playerRow = playerControllerNonMono.playerRow;
 
         // Assert
