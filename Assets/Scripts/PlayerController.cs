@@ -8,86 +8,179 @@ public class PlayerController : MonoBehaviour {
     static MethodInfo _clearConsoleMethod;
 
 	private Model model;
-	private int playerRow, playerCol;
-	private int[,] array;
-
-	void Start () {
-		ClearLogConsole();
+	private int playerRow, playerCol, monsterRow, monsterCol;
+	public Square[,] array;
+    void Start () {
+		// ClearLogConsole();
 		model = new Model(10, 10);
-		this.array = model.array;
-		FindPlayer(this.array);
-		model.DisplayArrayDebug();
-		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
+        this.array = model.array;
+		FindPlayer();
+        FindMonster();
+        //model.DisplayArrayDebug();		
+		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 
 	}
 	
 	void Update () {
-		
-		if(Input.GetKeyDown(KeyCode.W))
-		{
-			MovePlayer("up");
-		}
-		if(Input.GetKeyDown(KeyCode.S))
-		{
-			MovePlayer("down");
-		}
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			MovePlayer("left");
-		}
-		if(Input.GetKeyDown(KeyCode.D))
-		{
-			MovePlayer("right");
-		}	
 
-	}
+		if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+		{
+            MovePlayer(Orientation.Up);
+            model.player.TheOrientation = Orientation.Up;
 
-	private void MovePlayer(string direction)
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			MovePlayer(Orientation.Down);
+
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			MovePlayer(Orientation.Left);
+            
+
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			MovePlayer(Orientation.Right);
+
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Spell spell = new Spell("Kamehaneha", 15, 20, array[playerRow,playerCol].getCharacter().TheOrientation, 7,0);
+            spell.showSpell(model);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Spell spell = new Spell("Landslide", 8, 12, array[playerRow, playerCol].getCharacter().TheOrientation, 1,3);
+            spell.showSpell(model);
+        }
+        /*if (Input.GetKeyDown(KeyCode.U))
+        {
+            Spell spell = new Spell("Tsunami", 10, 15, array[playerRow, playerCol].getCharacter().TheOrientation, 4,2);
+            spell.showSpell(model);
+        }*/
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Spell spell = new Spell("Tortuous Breath", 5, 7, array[playerRow, playerCol].getCharacter().TheOrientation, 1,0);
+            spell.showSpell(model);
+        }
+
+        if (Input.anyKeyDown)
+        {
+            MoveMonster(UnityEngine.Random.Range(0, 4));
+        }
+
+    }
+
+	private void MovePlayer(Orientation direction)
 	{
 		for(int i = 0; i < array.GetLength(1); i++)
 		{
             for (int j = 0; j < array.GetLength(0); j++)
             {
-				if(array[i,j] == model.player)
+                Coordinates coord = new Coordinates(i, j);
+				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
 				{
-					if(direction == "up")
+					if(direction == Orientation.Right && i > 0)
+                    {
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow - 1, playerCol)).setCharacter(model.player);
+                    }
+					if(direction == Orientation.Left && i < array.GetLength(1)-1)
+                    {
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow + 1, playerCol)).setCharacter(model.player);
+                    }
+					if(direction == Orientation.Up && j > 0)
 					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow -1, playerCol] = model.player;
-					}
-					if(direction == "down")
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow, playerCol - 1)).setCharacter(model.player);
+                    }
+					if(direction == Orientation.Down && j < array.GetLength(1)-1)
 					{
-						array[playerRow, playerCol] = 0;
-						// Debug.Log(playerRow);
-						array[playerRow +1, playerCol] = model.player;
-					}
-					if(direction == "left")
-					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow, playerCol -1] = model.player;
-					}
-					if(direction == "right")
-					{
-						array[playerRow, playerCol] = 0;
-						array[playerRow, playerCol + 1] = model.player;
-					}
+                        model.getSquare(new Coordinates(playerRow, playerCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(playerRow, playerCol + 1)).setCharacter(model.player);
+                    }
 				}
             }
 		}
+        
 		ClearLogConsole();
-		FindPlayer(this.array);
-		model.DisplayArrayDebug();
-		Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
+		FindPlayer();
+		//model.DisplayArrayDebug();
+		//Debug.Log("Player Row: " + playerRow + "\nPlayer Col: " + playerCol);
 		
 	}
 
-	private void FindPlayer(int[,] array)
+    private void MoveMonster(int d)
+    {
+        Orientation direction = Orientation.Down;
+
+        switch (d)
+        {
+            case 0:
+                direction = Orientation.Up;
+                break;
+            case 1:
+                direction = Orientation.Left;
+                break;
+            case 2:
+                direction = Orientation.Down;
+                break;
+            case 3:
+                direction = Orientation.Right;
+                break;
+            default:
+                direction = Orientation.Up;
+                break;
+        }
+        for (int i = 0; i < array.GetLength(1); i++)
+        {
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+                Coordinates coord = new Coordinates(i, j);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                {
+                    if (direction == Orientation.Right && i > 0)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow - 1, monsterCol)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Left && i < array.GetLength(1) - 1)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow + 1, monsterCol)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Up && j > 0)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow, monsterCol - 1)).setCharacter(model.monster);
+                    }
+                    if (direction == Orientation.Down && j < array.GetLength(1) - 1)
+                    {
+                        model.getSquare(new Coordinates(monsterRow, monsterCol)).setCharacter(null);
+                        model.getSquare(new Coordinates(monsterRow, monsterCol + 1)).setCharacter(model.monster);
+                    }
+                }
+            }
+        }
+
+        ClearLogConsole();
+        FindMonster();
+
+
+    }
+
+
+    private void FindPlayer()
 	{
 		for(int i = 0; i < array.GetLength(1); i++)
 		{
             for (int j = 0; j < array.GetLength(0); j++)
             {
-				if(array[i,j] == 1)
+                Coordinates coord = new Coordinates(i, j);
+				if(model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && model.getSquare(coord).getCharacter().isPlayable)
 				{
 					playerRow = i;
 					playerCol = j;
@@ -96,8 +189,24 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+    private void FindMonster()
+    {
+        for (int i = 0; i < array.GetLength(1); i++)
+        {
+            for (int j = 0; j < array.GetLength(0); j++)
+            {
+                Coordinates coord = new Coordinates(i, j);
+                if (model.getSquare(coord).isOccupied() && model.getSquare(coord).isCharacter() && !model.getSquare(coord).getCharacter().isPlayable)
+                {
+                    monsterRow = i;
+                    monsterCol = j;
+                }
+            }
+        }
+    }
 
-     static MethodInfo clearConsoleMethod {
+
+    static MethodInfo clearConsoleMethod {
          get {
              if (_clearConsoleMethod == null) {
                  Assembly assembly = Assembly.GetAssembly (typeof(SceneView));
@@ -109,6 +218,6 @@ public class PlayerController : MonoBehaviour {
      }
  
      public static void ClearLogConsole() {
-         clearConsoleMethod.Invoke (new object (), null);
+        clearConsoleMethod.Invoke (new object (), null);
      }
 }

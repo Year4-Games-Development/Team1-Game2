@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 50e3ea03fcd9e3242b90c08f843cf032
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - player: {instanceID: 0}
+  - entityLayout: {instanceID: 0}
+  - groundLayout: {instanceID: 0}
+  - playerSprite: {instanceID: 0}
+  - enemySprite: {instanceID: 0}
+  - spellEfectTile: {instanceID: 0}
+  - groundTile: {instanceID: 0}
+  - groundTileVariation: {instanceID: 0}
+  - upLeftBorderTile: {instanceID: 0}
+  - upBorderTile: {instanceID: 0}
+  - upRightBorderLayout: {instanceID: 0}
+  - leftBorderTile: {instanceID: 0}
+  - rightBorderTile: {instanceID: 0}
+  - downLeftBorderTile: {instanceID: 0}
+  - downBorderTile: {instanceID: 0}
+  - downRightBorderTile: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
